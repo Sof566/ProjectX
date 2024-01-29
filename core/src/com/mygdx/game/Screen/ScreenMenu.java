@@ -4,11 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.Animator;
 import com.mygdx.game.Button;
+import com.mygdx.game.Entity.Player;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.ResourseManager;
 
@@ -17,6 +19,8 @@ public class ScreenMenu extends Screen{
     ResourseManager resourseManager;
     Texture texture;
     Music music;
+    Player playerTest;
+    Animation animation;
 
     Vector2 vectorExit = new Vector2(0,0);
     Vector2 vectorSettings = new Vector2(200, 200);
@@ -27,14 +31,20 @@ public class ScreenMenu extends Screen{
         camera.setToOrtho(false, MyGdxGame.SCR_WIDTH, MyGdxGame.SCR_HEIGHT);
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
+        this.screenManager = screenManager;
+        this.resourseManager = resourseManager;
+
+        playerTest = new Player(resourseManager, vectorExit);
+
         texture = resourseManager.getTexture(ResourseManager.bcgMenu);
         bttExit = new Button(resourseManager.getTexture(ResourseManager.txtExit), camera.position.x+ vectorExit.x, camera.position.y+vectorExit.y, 200, 100);
-        bttSettings = new Button(resourseManager.getTexture(ResourseManager.txtSettings), camera.position.x+ vectorSettings.x, camera.position.y+vectorSettings.y, 200, 100);
-        bttPlay = new Button(resourseManager.getTexture(ResourseManager.bttPlay), 1000, 600, 100, 100);
+        bttSettings = new Button(resourseManager.getTexture(ResourseManager.txtSettings), camera.position.x+ vectorSettings.x, camera.position.y+vectorSettings.y, 50,50);
+        bttPlay = new Button(resourseManager.getTexture(ResourseManager.bttPlay), 1000, 600, 300, 300);
         music = resourseManager.getMusic(ResourseManager.music);
         music.setLooping(true);
         music.setVolume(MyGdxGame.VOLUME);
         music.play();
+
     }
 
     @Override
@@ -46,18 +56,19 @@ public class ScreenMenu extends Screen{
 
     @Override
     protected void render(SpriteBatch batch) {
-        Gdx.gl20.glClearColor(0,0,0,1);
-        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
         batch.draw(texture, 0,0, MyGdxGame.SCR_WIDTH, MyGdxGame.SCR_HEIGHT);
         bttSettings.render(batch);
         bttExit.render(batch);
+        bttPlay.render(batch);
+        playerTest.render(batch);
         batch.end();
 
         bttExit.update(camera);
         bttSettings.update(camera);
+        bttPlay.update(camera);
     }
 
     @Override
@@ -67,8 +78,6 @@ public class ScreenMenu extends Screen{
 
     @Override
     public void render(float delta) {
-        Gdx.gl20.glClearColor(0,0,0,1);
-
     }
 
     @Override
@@ -112,7 +121,7 @@ public class ScreenMenu extends Screen{
         bttPlay.setClickListener(new Button.onClickListener() {
             @Override
             public void click() {
-                //screenManager.setScreen(new ScreenPlay(screenManager, resourseManager));
+                screenManager.setScreen(new ScreenPlay(screenManager, resourseManager));
             }
         });
     }

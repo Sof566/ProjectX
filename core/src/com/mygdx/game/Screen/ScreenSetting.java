@@ -14,15 +14,19 @@ import com.mygdx.game.ResourseManager;
 public class ScreenSetting extends Screen{
     private GameScreenManager screenManager;
     private ResourseManager resourseManager;
-    private Texture texture;
+    private Texture bcgtexture;
     private Button bttBack, bttVolumePlus, bttVolumeMinus;
     private Music music;
+    Vector2 vectorExit = new Vector2(0,0);
 
     protected ScreenSetting(GameScreenManager screenManager, ResourseManager resourseManager) {
         super(screenManager, resourseManager);
 
-        texture = resourseManager.getTexture(ResourseManager.bcgLoading);
-        bttBack = new Button(resourseManager.getTexture(ResourseManager.bcgMenu), 0, 0, 200, 100);
+        this.screenManager = screenManager;
+        this.resourseManager = resourseManager;
+
+        bcgtexture = resourseManager.getTexture(ResourseManager.bcgLoading);
+        bttBack = new Button(resourseManager.getTexture(ResourseManager.txtExit), camera.position.x+ vectorExit.x, camera.position.y+vectorExit.y, 200, 100);
         bttVolumePlus = new Button(resourseManager.getTexture(ResourseManager.txtVolumePlus), 200, 200, 100, 100);
         bttVolumeMinus = new Button(resourseManager.getTexture(ResourseManager.txtVolumeMinus), 400, 400, 100, 100);
 
@@ -41,12 +45,8 @@ public class ScreenSetting extends Screen{
 
     @Override
     protected void render(SpriteBatch batch) {
-        Gdx.gl20.glClearColor(0,0,0,1);
-        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.setProjectionMatrix(camera.combined);
-
         batch.begin();
-        batch.draw(texture, 0,0, MyGdxGame.SCR_WIDTH, MyGdxGame.SCR_HEIGHT);
+        batch.draw(bcgtexture, 0,0, MyGdxGame.SCR_WIDTH, MyGdxGame.SCR_HEIGHT);
         bttBack.render(batch);
         bttVolumeMinus.render(batch);
         bttVolumePlus.render(batch);
@@ -98,6 +98,7 @@ public class ScreenSetting extends Screen{
             @Override
             public void click() {
                 screenManager.setScreen(new ScreenMenu(screenManager, resourseManager));
+                System.out.println("sjdbckszdbc");
             }
         });
         bttVolumePlus.setClickListener(new Button.onClickListener() {

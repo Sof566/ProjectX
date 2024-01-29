@@ -1,14 +1,18 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.MusicLoader;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class ResourseManager {
-    public static final String bcgLoading = "images/1.png";
+    public static final String bcgLoading = "images/a1.png";
     public static final String bcgMenu = "images/2.png";
     public static final String bcgSetting = "images/test.png";
     public static final String txtSettings = "images/button_setting.png";
@@ -17,14 +21,22 @@ public class ResourseManager {
     public static final String txtVolumeMinus = "images/txtMinus.png";
     public static final String txtPlayer = "images/player.png";
     public static final String bttPlay = "images/img_play.png";
+    public static final String animKapitochca = "images/hb.png";
+    public static final String touchBackground = "images/touchBackground.png";
+    public static final String touchKnob = "images/touchKnob.png";
+
+    public static final String xuita = "images/Xuita.png";
+
     public Texture texture;
     public static final String music = "sound/music/audio_gameKapy.mp3";
     AssetManager assetManager;
+    private BitmapFont font;
 
     public void loading() {
         assetManager = new AssetManager();
         loadingImg();
         loadingMusic();
+        //loadingFonts();
     }
 
     public void loadingImg() {
@@ -38,12 +50,25 @@ public class ResourseManager {
         assetManager.load(txtVolumeMinus, Texture.class);
         assetManager.load(txtPlayer, Texture.class);
         assetManager.load(bttPlay, Texture.class);
+        assetManager.load(animKapitochca, Texture.class);
+        assetManager.load(touchBackground, Texture.class);
+        assetManager.load(touchKnob, Texture.class);
+        assetManager.load(xuita, Texture.class);
     }
 
     public void loadingMusic() {
         assetManager.setLoader(Music.class, new MusicLoader(new InternalFileHandleResolver()));
         assetManager.load(music, Music.class);
     }
+
+    /*private void loadingFonts() {
+        this.font = new BitmapFont();
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/main_font.ttf"));
+        parameter.size = 25;
+        parameter.color = new Color(1.0F, 1.0F, 1.0F, 1.0F);
+        this.font = generator.generateFont(parameter);
+    }*/
 
     public boolean isLoad() {
         return assetManager.update();
