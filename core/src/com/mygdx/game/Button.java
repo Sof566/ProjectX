@@ -1,5 +1,4 @@
 package com.mygdx.game;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
@@ -30,8 +29,14 @@ public class Button {
         Vector3 plaseClick = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         plaseClick = camera.unproject(plaseClick);
         isPressed = rectangle.contains(plaseClick.x, plaseClick.y);
-        if(isPressed & Gdx.input.justTouched()) { ///проверить работает ли без второго
+        if(isPressed & Gdx.input.justTouched()) {
             clickListener.click();
+        }
+    }
+
+    public void dispose() {
+        if (texture != null) {
+            texture.dispose();
         }
     }
 

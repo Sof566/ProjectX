@@ -18,12 +18,12 @@ public class TouchPad {
 
     private OrthographicCamera camera;
     private Touchpad touchpad;
-    private Touchpad touchpadShoot;
     ResourseManager resourseManager;
 
-    public TouchPad(OrthographicCamera camera) {
+    public TouchPad(OrthographicCamera camera, ResourseManager resourseManager) {
         //Create camera
         this.camera = camera;
+        this.resourseManager = resourseManager;
 
         Viewport viewport = new FitViewport(MyGdxGame.SCR_WIDTH, MyGdxGame.SCR_HEIGHT, camera);
 
@@ -43,14 +43,10 @@ public class TouchPad {
         touchpadStyle.knob = touchKnob;
         //Create new TouchPad with the created style
         touchpad = new Touchpad(10, touchpadStyle);
-        touchpadShoot = new Touchpad(10, touchpadStyle);
-        //setBounds(x,y,width,height)
-        //touchpad.setBounds(camera.position.x, camera.position.y, 200, 200);
 
         //Create a Stage and add TouchPad
         Stage stage = new Stage(viewport, new SpriteBatch());
         stage.addActor(touchpad);
-        stage.addActor(touchpadShoot);
         Gdx.input.setInputProcessor(stage);
 
     }
@@ -59,21 +55,12 @@ public class TouchPad {
         return new Vector2(touchpad.getKnobPercentX(), touchpad.getKnobPercentY());
     }
 
-    public Vector2 getKnobPercentShoot(){
-        return new Vector2(touchpadShoot.getKnobPercentX(), touchpadShoot.getKnobPercentY());
-    }
-
     public void render(SpriteBatch batch) {
-
+        batch.begin();
         touchpad.setBounds(camera.position.x - camera.viewportWidth / 2 + 30,
                 camera.position.y - camera.viewportHeight / 2 + 30, 270, 270);
 
-        touchpadShoot.setBounds(camera.position.x + camera.viewportWidth / 2 - 300,
-                camera.position.y - camera.viewportHeight / 2 + 30, 270, 270);
-
-        batch.begin();
         touchpad.draw(batch, 1);
-        touchpadShoot.draw(batch, 1);
         batch.end();
     }
 }

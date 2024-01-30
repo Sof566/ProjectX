@@ -17,13 +17,14 @@ public class ScreenSetting extends Screen{
     private Texture bcgtexture;
     private Button bttBack, bttVolumePlus, bttVolumeMinus;
     private Music music;
-    Vector2 vectorExit = new Vector2(0,0);
+    Vector2 vectorExit = new Vector2(-640,260);
 
     protected ScreenSetting(GameScreenManager screenManager, ResourseManager resourseManager) {
         super(screenManager, resourseManager);
 
         this.screenManager = screenManager;
         this.resourseManager = resourseManager;
+        camera.setToOrtho(false, MyGdxGame.SCR_WIDTH, MyGdxGame.SCR_HEIGHT);
 
         bcgtexture = resourseManager.getTexture(ResourseManager.bcgLoading);
         bttBack = new Button(resourseManager.getTexture(ResourseManager.txtExit), camera.position.x+ vectorExit.x, camera.position.y+vectorExit.y, 200, 100);
@@ -39,12 +40,17 @@ public class ScreenSetting extends Screen{
 
     @Override
     protected void update(float dt) {
-        camera.update();
+        mousePosition = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         inputTap();
+        camera.update();
     }
 
     @Override
     protected void render(SpriteBatch batch) {
+        Gdx.gl20.glClearColor(0, 0, 0, 1);
+        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.setProjectionMatrix(camera.combined);
+
         batch.begin();
         batch.draw(bcgtexture, 0,0, MyGdxGame.SCR_WIDTH, MyGdxGame.SCR_HEIGHT);
         bttBack.render(batch);
@@ -98,19 +104,24 @@ public class ScreenSetting extends Screen{
             @Override
             public void click() {
                 screenManager.setScreen(new ScreenMenu(screenManager, resourseManager));
-                System.out.println("sjdbckszdbc");
             }
         });
         bttVolumePlus.setClickListener(new Button.onClickListener() {
             @Override
             public void click() {
                 MyGdxGame.VOLUME += 0.1;
+                if (MyGdxGame.VOLUME < 0){
+                    MyGdxGame.VOLUME = 1;
+                }
             }
         });
         bttVolumeMinus.setClickListener(new Button.onClickListener() {
             @Override
             public void click() {
                 MyGdxGame.VOLUME -= 0.1;
+                if (MyGdxGame.VOLUME < 0){
+                    MyGdxGame.VOLUME = 0;
+                }
             }
         });
     }

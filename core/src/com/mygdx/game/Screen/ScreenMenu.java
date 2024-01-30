@@ -19,11 +19,11 @@ public class ScreenMenu extends Screen{
     ResourseManager resourseManager;
     Texture texture;
     Music music;
-    Player playerTest;
     Animation animation;
 
-    Vector2 vectorExit = new Vector2(0,0);
-    Vector2 vectorSettings = new Vector2(200, 200);
+    Vector2 vectorExit = new Vector2(-640,260);
+    Vector2 vectorSettings = new Vector2(520, 240);
+    Vector2 vectorStart = new Vector2(-150, -75);
     Button bttExit, bttSettings, bttPlay;
 
     public ScreenMenu(GameScreenManager screenManager, ResourseManager resourseManager) {
@@ -34,12 +34,10 @@ public class ScreenMenu extends Screen{
         this.screenManager = screenManager;
         this.resourseManager = resourseManager;
 
-        playerTest = new Player(resourseManager, vectorExit);
-
         texture = resourseManager.getTexture(ResourseManager.bcgMenu);
         bttExit = new Button(resourseManager.getTexture(ResourseManager.txtExit), camera.position.x+ vectorExit.x, camera.position.y+vectorExit.y, 200, 100);
-        bttSettings = new Button(resourseManager.getTexture(ResourseManager.txtSettings), camera.position.x+ vectorSettings.x, camera.position.y+vectorSettings.y, 50,50);
-        bttPlay = new Button(resourseManager.getTexture(ResourseManager.bttPlay), 1000, 600, 300, 300);
+        bttSettings = new Button(resourseManager.getTexture(ResourseManager.txtSettings), camera.position.x+ vectorSettings.x, camera.position.y+vectorSettings.y, 100,100);
+        bttPlay = new Button(resourseManager.getTexture(ResourseManager.bttPlay), camera.position.x+ vectorStart.x, camera.position.y+ vectorStart.y, 300, 150);
         music = resourseManager.getMusic(ResourseManager.music);
         music.setLooping(true);
         music.setVolume(MyGdxGame.VOLUME);
@@ -57,13 +55,14 @@ public class ScreenMenu extends Screen{
     @Override
     protected void render(SpriteBatch batch) {
         batch.setProjectionMatrix(camera.combined);
+        Gdx.gl20.glClearColor(0, 0, 0, 1);
+        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
         batch.draw(texture, 0,0, MyGdxGame.SCR_WIDTH, MyGdxGame.SCR_HEIGHT);
         bttSettings.render(batch);
         bttExit.render(batch);
         bttPlay.render(batch);
-        playerTest.render(batch);
         batch.end();
 
         bttExit.update(camera);
@@ -128,6 +127,10 @@ public class ScreenMenu extends Screen{
 
     @Override
     public void dispose() {
-
+        texture.dispose();
+        bttExit.dispose();
+        bttSettings.dispose();
+        bttPlay.dispose();
+        music.dispose();
     }
 }

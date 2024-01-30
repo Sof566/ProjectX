@@ -16,7 +16,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	public static final int SCR_WIDTH = 1280, SCR_HEIGHT = 720;
 
 	public static float VOLUME = 1;
-	
+
 	@Override
 	public void create () {
 		spriteBatch = new SpriteBatch();
@@ -34,7 +34,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		screenManager.update(Gdx.graphics.getDeltaTime());
 		screenManager.render(spriteBatch);
 	}
-	
+
 	@Override
 	public void dispose () {
 		screenManager.dispose();
