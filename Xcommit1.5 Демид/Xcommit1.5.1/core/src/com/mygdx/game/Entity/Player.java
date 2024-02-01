@@ -1,13 +1,16 @@
 package com.mygdx.game.Entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Animator;
 import com.mygdx.game.ResourseManager;
-import com.badlogic.gdx.Input;
 
 public class Player extends Entity{
     ResourseManager resourseManager;
@@ -15,7 +18,6 @@ public class Player extends Entity{
     private static final int BASICSPEED = 5;
     private MoveState playerMoveState;
     Animator animation;
-
     public Player(ResourseManager resourseManager, Vector2 startPosition) {
         this.resourseManager = resourseManager;
         initPosition(startPosition);
@@ -33,23 +35,6 @@ public class Player extends Entity{
         position = vector2;
     }
 
-    @Override
-    public void update(float dt, OrthographicCamera camera) {
-        if (lifeState == LifeState.LIFE) {
-            float cameraSpeed = velocity.len();
-            camera.position.set(position.x + (size.x / 2), position.y + (size.y / 2), 0);
-            camera.translate(velocity.x * dt * cameraSpeed, velocity.y * dt * cameraSpeed);
-            rectangle.setPosition(position);
-            position.x = rectangle.getX();
-            position.y = rectangle.getY();
-            if(hp <= 0) {
-                hp = 0;
-                lifeState = LifeState.DEAD;
-                System.out.println(lifeState);
-            }
-
-        }
-    }
 
 
     @Override
@@ -60,7 +45,18 @@ public class Player extends Entity{
     }
 
 
-
+    @Override
+    public void update(float dt, OrthographicCamera camera) {
+        if (lifeState == LifeState.LIFE) {
+            float cameraSpeed = velocity.len();
+            camera.position.set(position.x + (size.x / 2), position.y + (size.y / 2), 0);
+            camera.translate(velocity.x * dt * cameraSpeed, velocity.y * dt * cameraSpeed);
+            rectangle.setPosition(position);
+            position.x = rectangle.getX();
+            position.y = rectangle.getY();
+            System.out.println(hp);
+        }
+    }
 
     @Override
     public void updatePosition() {

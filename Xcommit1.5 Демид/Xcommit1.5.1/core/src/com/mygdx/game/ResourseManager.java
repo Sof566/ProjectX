@@ -28,10 +28,6 @@ public class ResourseManager {
     public static final String xuita = "images/Xuita.png";
     public static String rockBlock = "images/Blocks/rock.png";
     public static String spikeBlock = "images/Blocks/spike.png";
-    public static String shell = "images/blocks/shell.png";
-
-    public static String lol = "images/sample_bush.png";
-    public static String life = "images/life.png";
 
     public Texture texture;
     public static final String music = "sound/music/audio_gameKapy.mp3";
@@ -62,9 +58,6 @@ public class ResourseManager {
         assetManager.load(xuita, Texture.class);
         assetManager.load(rockBlock, Texture.class);
         assetManager.load(spikeBlock, Texture.class);
-        assetManager.load(lol, Texture.class);
-        assetManager.load(life, Texture.class);
-        assetManager.load(shell, Texture.class);
     }
 
     public void loadingMusic() {

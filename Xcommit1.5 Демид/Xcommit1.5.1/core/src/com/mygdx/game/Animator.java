@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
 public class Animator{
-    private int frame_cols, frame_rows; //кол-во строк, столбцов
+    private int frame_cols, frame_rows; //кол-во столбцов, кол-во строк
     Animation animation;
     Texture texture;
     TextureRegion[] animArray;
@@ -41,5 +41,4 @@ public class Animator{
         return  (TextureRegion) animation.getKeyFrame(stateTime, true);
     }
 }
-
 
